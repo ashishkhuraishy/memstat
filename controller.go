@@ -30,12 +30,13 @@ type controller struct {
 }
 
 func newController() *controller {
+	terminalwidth, _ := ui.TerminalDimensions()
 	ctl := &controller{
 		Grid: ui.NewGrid(),
 
 		HeapObjectsSparkLine:     widgets.NewSparkline(),
 		HeapObjectSparkLineGroup: widgets.NewSparklineGroup(),
-		HeapObjectsData:          NewChartRing(terminalWidth),
+		HeapObjectsData:          NewChartRing(terminalwidth),
 
 		SysText:        widgets.NewParagraph(),
 		GCCCPUFraction: widgets.NewGauge(),
@@ -95,7 +96,7 @@ func (c *controller) initUI() {
 	c.HeapObjectsSparkLine.LineColor = ui.Color(89)
 	c.HeapObjectSparkLineGroup = widgets.NewSparklineGroup(c.HeapObjectsSparkLine)
 
-	c.SysText.Text = "Sys, the total bytes of memory obtained from OS"
+	c.SysText.Title = "Sys, the total bytes of memory obtained from OS"
 	c.SysText.PaddingLeft = 25
 	c.SysText.PaddingTop = 1
 
@@ -124,6 +125,6 @@ func (c *controller) initUI() {
 }
 
 func (c *controller) resize() {
-	_, h := ui.TerminalDimensions()
-	c.Grid.SetRect(0, 0, terminalWidth, h)
+	w, h := ui.TerminalDimensions()
+	c.Grid.SetRect(0, 0, w, h)
 }
