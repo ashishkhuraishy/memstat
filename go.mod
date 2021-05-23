@@ -1,4 +1,4 @@
-module github.com/ashishkhuraishy/termui_test
+module github.com/ashishkhuraishy/memstat
 
 go 1.16
 

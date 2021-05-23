@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/ashishkhuraishy/termui_test/pkg"
+	"github.com/ashishkhuraishy/memstat/pkg"
 	ui "github.com/gizak/termui/v3"
 )
 
