@@ -1,4 +1,4 @@
-package main
+package pkg
 
 import (
 	"fmt"
@@ -12,6 +12,11 @@ const (
 	terminalWidth     = 120
 	heapAllocBarCount = 6
 )
+
+type Controller interface {
+	Render(*runtime.MemStats)
+	Resize()
+}
 
 type controller struct {
 	Grid *ui.Grid
@@ -29,20 +34,21 @@ type controller struct {
 	HeapPie *widgets.PieChart
 }
 
-func newController() *controller {
+func NewController() *controller {
 	terminalwidth, _ := ui.TerminalDimensions()
+
 	ctl := &controller{
 		Grid: ui.NewGrid(),
 
 		HeapObjectsSparkLine:     widgets.NewSparkline(),
 		HeapObjectSparkLineGroup: widgets.NewSparklineGroup(),
-		HeapObjectsData:          NewChartRing(terminalwidth),
+		HeapObjectsData:          newChartRing(terminalwidth),
 
 		SysText:        widgets.NewParagraph(),
 		GCCCPUFraction: widgets.NewGauge(),
 
 		HeapAllocBarChart:     widgets.NewBarChart(),
-		HeapAllocBarChartData: NewChartRing(heapAllocBarCount),
+		HeapAllocBarChartData: newChartRing(heapAllocBarCount),
 
 		HeapPie: widgets.NewPieChart(),
 	}

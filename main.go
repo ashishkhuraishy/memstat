@@ -4,6 +4,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/ashishkhuraishy/termui_test/pkg"
 	ui "github.com/gizak/termui/v3"
 )
 
@@ -17,7 +18,7 @@ func Run() {
 	}
 	defer ui.Close()
 
-	controller := newController()
+	controller := pkg.NewController()
 
 	events := ui.PollEvents()
 	tick := time.Tick(time.Second)
@@ -34,7 +35,7 @@ func Run() {
 				controller.Resize()
 			}
 		case <-tick:
-			stat := LoadStats()
+			stat := pkg.LoadStats()
 			controller.Render(stat)
 		}
 	}
